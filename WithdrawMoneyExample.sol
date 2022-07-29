@@ -31,4 +31,8 @@ contract WithdrawMoneyExample {
     function withdrawMoneyTo(address payable to) public {
         to.transfer(getCurrentAccountBalanceInWei());
     }
+
+    function getGasPrice() public view returns (uint256) {
+        return tx.gasprice;
+    }
 }
