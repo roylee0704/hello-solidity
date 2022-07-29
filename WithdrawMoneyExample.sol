@@ -2,6 +2,8 @@
 
 pragma solidity ^0.8.1;
 
+// ref: https://ethereum-blockchain-developer.com/020-escrow-smart-contract/03-withdraw-ether-smart-contract/
+// ref: https://ethereum-blockchain-developer.com/020-escrow-smart-contract/04-withdraw-to-specific-account/
 contract WithdrawMoneyExample {
     uint256 public balanceReceived;
 
@@ -23,6 +25,10 @@ contract WithdrawMoneyExample {
 
         // alt(roy): payable(msg.sender).transfer(getCurrentAccountBalanceInWei());
         address payable to = payable(msg.sender);
+        to.transfer(getCurrentAccountBalanceInWei());
+    }
+
+    function withdrawMoneyTo(address payable to) public {
         to.transfer(getCurrentAccountBalanceInWei());
     }
 }
