@@ -1,5 +1,6 @@
 pragma solidity ^0.8.1;
 
+// ref: https://ethereum-blockchain-developer.com/020-escrow-smart-contract/01-smart-contract-starting/
 contract SendMoneyExample {
     uint256 public balanceReceived;
 
