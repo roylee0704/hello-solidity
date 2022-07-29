@@ -8,11 +8,11 @@ contract MappingStructExample {
         balances[msg.sender] += msg.value;
     }
 
-    function withdraw(address payable _to, uint256 _amount) public {
-        uint256 benificialBalance = balances[_to];
-        require(benificialBalance >= _amount, "Not enough funds");
+    function transfer(address payable _to, uint256 _amount) public {
+        uint256 myBalance = balances[msg.sender];
+        require(myBalance > _amount, "Not enough funds");
 
-        balances[_to] -= _amount;
+        balances[msg.sender] -= _amount;
         _to.transfer(_amount);
     }
 
