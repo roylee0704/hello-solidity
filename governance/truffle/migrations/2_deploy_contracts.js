@@ -39,7 +39,8 @@ module.exports = async function (deployer) {
   const votingDelay = 0 // How many blocks after proposal until voting becomes active
   const votingPeriod = 5 // How many blocks to allow voters to vote.
 
-  await deployer.deploy(Governance, token.address, timelock.address, quorum)
+  console.log(token.address, timelock.address)
+  await deployer.deploy(Governance, token.address, timelock.address, ',eh')
   const governance = await Governance.deployed()
 
 

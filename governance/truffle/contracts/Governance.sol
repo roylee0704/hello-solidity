@@ -2,7 +2,6 @@
 pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/governance/Governor.sol";
-import "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
@@ -10,7 +9,6 @@ import "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.so
 
 contract MyGovernor is
     Governor,
-    GovernorSettings,
     GovernorCountingSimple,
     GovernorVotes,
     GovernorVotesQuorumFraction,
@@ -18,35 +16,20 @@ contract MyGovernor is
 {
     constructor(IVotes _token, TimelockController _timelock)
         Governor("MyGovernor")
-        GovernorSettings(
-            1, /* 1 block */
-            45818, /* 1 week */
-            0
-        )
         GovernorVotes(_token)
         GovernorVotesQuorumFraction(4)
         GovernorTimelockControl(_timelock)
     {}
 
+    function votingDelay() public pure override returns (uint256) {
+        return 1; // 1 block
+    }
+
+    function votingPeriod() public pure override returns (uint256) {
+        return 45818; // 1 week
+    }
+
     // The following functions are overrides required by Solidity.
-
-    function votingDelay()
-        public
-        view
-        override(IGovernor, GovernorSettings)
-        returns (uint256)
-    {
-        return super.votingDelay();
-    }
-
-    function votingPeriod()
-        public
-        view
-        override(IGovernor, GovernorSettings)
-        returns (uint256)
-    {
-        return super.votingPeriod();
-    }
 
     function quorum(uint256 blockNumber)
         public
@@ -73,15 +56,6 @@ contract MyGovernor is
         string memory description
     ) public override(Governor, IGovernor) returns (uint256) {
         return super.propose(targets, values, calldatas, description);
-    }
-
-    function proposalThreshold()
-        public
-        view
-        override(Governor, GovernorSettings)
-        returns (uint256)
-    {
-        return super.proposalThreshold();
     }
 
     function _execute(

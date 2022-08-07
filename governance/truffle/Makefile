@@ -1,6 +1,3 @@
-connect:
-	truffle ganache
-
 migrate:
 	truffle migrate --network ganache --reset
 
